@@ -1,0 +1,85 @@
+{
+  "name": "test-task-vfs",
+  "version": "0.0.1",
+  "description": "Virtual file system",
+  "author": "Roman Burunkov <romon2002@gmail.com>",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "format": "prettier --write \"**/*.js\"",
+    "lint": "eslint --ignore-path .gitignore src/** migrate.js migrations/**",
+    "lint:fix": "eslint --fix --ignore-path .gitignore src/** migrate.js migrations/**",
+    "start": "babel-node index.js",
+    "start:dev": "nodemon",
+    "test": "jest",
+    "test:cov": "jest --coverage",
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "migrate": "node -r dotenv/config ./migrate.js"
+  },
+  "dependencies": {
+    "@nestjs/common": "^7.0.0",
+    "@nestjs/config": "^0.6.3",
+    "@nestjs/core": "^7.0.0",
+    "@nestjs/platform-express": "^7.0.0",
+    "dotenv": "^8.2.0",
+    "express-session": "^1.17.1",
+    "knex": "^0.95.5",
+    "mysql": "^2.18.1",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^6.5.4",
+    "tm-is": "^0.0.3",
+    "tm-result": "^0.0.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@babel/node": "^7.6.2",
+    "@babel/plugin-proposal-decorators": "^7.6.0",
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "@babel/register": "^7.6.2",
+    "@babel/runtime": "^7.6.2",
+    "@nestjs/testing": "^7.0.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.26.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "jest": "^26.6.3",
+    "nodemon": "^1.19.2",
+    "prettier": "^1.18.2",
+    "supertest": "^4.0.2"
+  },
+  "eslintConfig": {
+    "env": {
+      "node": true,
+      "jest": true
+    },
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "ecmaFeatures": {
+        "legacyDecorators": true
+      }
+    },
+    "extends": [
+      "airbnb-base"
+    ],
+    "rules": {
+      "import/prefer-default-export": "off",
+      "no-param-reassign": [
+        "error",
+        {
+          "props": false
+        }
+      ]
+    }
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json"
+    ],
+    "rootDir": "src",
+    "testRegex": ".spec.js$",
+    "coverageDirectory": "../coverage"
+  }
+}
