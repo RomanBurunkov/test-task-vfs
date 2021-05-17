@@ -14,13 +14,15 @@
     "test": "jest",
     "test:cov": "jest --coverage",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migrate": "node -r dotenv/config ./migrate.js"
+    "init:db": "node -r dotenv/config ./migrate.js",
+    "init:data": "node -r dotenv/config ./auto-init.js"
   },
   "dependencies": {
     "@nestjs/common": "^7.0.0",
     "@nestjs/config": "^0.6.3",
     "@nestjs/core": "^7.0.0",
     "@nestjs/platform-express": "^7.0.0",
+    "directory-tree": "^2.2.9",
     "dotenv": "^8.2.0",
     "express-session": "^1.17.1",
     "knex": "^0.95.5",
