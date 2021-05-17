@@ -7,10 +7,10 @@ const tblData = [
     id: 2, name: 'file', description: 'File', ancestor_id: 0,
   },
   {
-    id: 3, name: 'text', description: 'Text file', ancestor_id: 1,
+    id: 3, name: 'text', description: 'Text file', ancestor_id: 2,
   },
   {
-    id: 4, name: 'image', description: 'Picture file', ancestor_id: 1,
+    id: 4, name: 'image', description: 'Picture file', ancestor_id: 2,
   },
 ];
 

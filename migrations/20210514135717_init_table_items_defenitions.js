@@ -15,4 +15,4 @@ exports.up = (knx) => knx(tblName).insert([
   { item_type_id: 4, prop_type_id: 6 }, // Image file has 'shootLocation' property.
 ]);
 
-exports.down = (knx) => knx.raw('TRUNCATE TABLE ??', tblName);
+exports.down = (knx) => knx(tblName).del();
