@@ -25,6 +25,7 @@
     "directory-tree": "^2.2.9",
     "dotenv": "^8.2.0",
     "express-session": "^1.17.1",
+    "helmet": "^4.6.0",
     "knex": "^0.95.5",
     "mysql": "^2.18.1",
     "reflect-metadata": "^0.1.13",

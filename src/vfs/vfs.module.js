@@ -3,6 +3,7 @@ import { VfsService } from './vfs.service';
 import { VfsController } from './vfs.controller';
 
 @Module({
+  exports: [VfsService],
   providers: [VfsService],
   controllers: [VfsController],
 })
