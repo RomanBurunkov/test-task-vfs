@@ -19,7 +19,7 @@ export class DbService {
    * Returns db network connection settings.
    * @returns {Object} db connection settings object.
    */
-   getNetworkConnSettings() {
+  getNetworkConnSettings() {
     return {
       host: this[CONFIG].host,
       port: this[CONFIG].port,

@@ -8,7 +8,7 @@ import { VfsModule } from './vfs/vfs.module';
   imports: [
     ConfigModule.forRoot(configuration()),
     DbModule,
-    VfsModule
+    VfsModule,
   ],
 })
 export class AppModule {}

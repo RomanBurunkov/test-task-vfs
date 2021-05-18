@@ -18,7 +18,7 @@ const appUseSession = (app, config) => {
     resave: false,
     saveUninitialized: true,
     cookie: { httpOnly: true },
-   }));
+  }));
 };
 
 const getLogLevels = () => (process.env.NODE_ENV === 'production'
