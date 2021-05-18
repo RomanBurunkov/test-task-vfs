@@ -5,6 +5,8 @@ const dirTree = require('directory-tree');
 const { isObject, isEmpty } = require('tm-is');
 const { v4: uuidv4, NIL: UUID_NIL } = require('uuid');
 
+const { createMap, parseNumbersString } = require('./src/utils');
+
 const PropertyType = require('./src/file.system/propertytype');
 const ItemType = require('./src/file.system/itemtype');
 
@@ -23,13 +25,6 @@ let propsTypes = [];
 
 const initPath = process.env.INIT_PATH || __dirname;
 const storagePath = process.env.STORAGE_PATH || path.join(__dirname, 'vfs-storage');
-
-const splitAndParse = (str) => str.split(',').map(s => parseInt(s, 10));
-
-const createItemsTypesPropMap = (itmTypes) => itmTypes.reduce((res, itmType) => {
-  res[itmType.id] = splitAndParse(itmType.prop_type_ids);
-  return res;
-}, {});
 
 const getFileTypeNameByExtension = (ext) => {
   switch(ext.replace('.', '')) {
@@ -56,7 +51,8 @@ async function getItemTypes() {
     .select('id', 'name', 'description', 'ancestor_id', propTypeIds)
     .groupBy('IT.id')
     .orderBy('IT.ancestor_id');
-  const propsMap = createItemsTypesPropMap(types);
+  // Create types map by id key with lists of props ids as a value.
+  const propsMap = createMap(types, 'id', (t) => parseNumbersString(t.prop_type_ids));
   console.log('Property types map', propsMap);
   const result = types
     .filter(t => ItemType.validate(t))
@@ -125,6 +121,16 @@ async function processItem(item, parent, deep = 1) {
 async function prepare() {
   await knex('items_props').del();
   await knex('items').del();
+  try {
+    const storagePathStats = await fs.stat(storagePath);
+    if (storagePathStats.isDirectory()) {
+      await fs.rmdir(storagePath, { recursive: true })
+    }
+  } catch(e) {
+    if (e.code !== 'ENOENT') {
+      throw e;
+    }
+  }
   await fs.mkdir(storagePath, { recursive: true })
 }
 
