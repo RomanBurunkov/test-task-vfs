@@ -10,7 +10,7 @@ const dbCnf = () => ({
     port: parseInt(process.env.DB_PORT, 10) || 3306,
     user: process.env.DB_USER || 'root',
     client: process.env.DB_CLIENT || 'mysql',
-    password: process.env.DB_PASSWD || 'qwerty',
+    password: process.env.DB_PASSWORD || 'qwerty',
     database: process.env.DB_NAME || 'vfs',
     socketPath: process.env.DB_SOCK_PATH || '/var/run/mysqld/mysqld.sock',
     connectionType: process.env.DB_CONN_TYPE || 'ipc',
