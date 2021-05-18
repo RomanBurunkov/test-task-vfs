@@ -11,6 +11,16 @@ const appSetup = (app) => {
   return app;
 };
 
+const appUseSession = (app, config) => {
+  app.use(session({
+    name: 'vfs-app.sid',
+    secret: config.get('secret'),
+    resave: false,
+    saveUninitialized: true,
+    cookie: { httpOnly: true },
+   }));
+};
+
 const getLogLevels = () => (process.env.NODE_ENV === 'production'
   ? ['log', 'warn', 'error']
   : ['log', 'warn', 'error', 'debug', 'verbose']);
@@ -18,12 +28,7 @@ const getLogLevels = () => (process.env.NODE_ENV === 'production'
 async function bootstrap() {
   const app = appSetup(await NestFactory.create(AppModule, { logger: getLogLevels() }));
   const config = app.get('ConfigService');
-  app.use(session({
-    secret: config.get('secret'),
-    resave: false,
-    saveUninitialized: true,
-    cookie: { httpOnly: true },
-   }));
+  appUseSession(app, config);
   await app.listen(config.get('port'), config.get('host'));
 }
 bootstrap();
