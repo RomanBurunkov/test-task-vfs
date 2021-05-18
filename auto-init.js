@@ -1,3 +1,5 @@
+const fs = require('fs').promises;
+const path = require('path');
 const Knex = require('knex');
 const dirTree = require('directory-tree');
 const { isObject, isEmpty } = require('tm-is');
@@ -18,6 +20,9 @@ const knex = Knex({ client, connection });
 
 let itemTypes = [];
 let propsTypes = [];
+
+const initPath = process.env.INIT_PATH || __dirname;
+const storagePath = process.env.STORAGE_PATH || path.join(__dirname, 'vfs-storage');
 
 const splitAndParse = (str) => str.split(',').map(s => parseInt(s, 10));
 
@@ -101,6 +106,7 @@ async function processFile(file, parent) {
       : Promise.resolve()
     ));
   }
+  await fs.copyFile(file.path, path.join(storagePath, uuid));
   return uuid;
 }
 
@@ -116,15 +122,18 @@ async function processItem(item, parent, deep = 1) {
   }
 }
 
+async function prepare() {
+  await knex('items_props').del();
+  await knex('items').del();
+  await fs.mkdir(storagePath, { recursive: true })
+}
+
 async function main() {
-  const initPath = process.env.INIT_PATH || __dirname;
+  await prepare();
   const tree = dirTree(initPath);
   console.log('Scanned files tree', tree);
   propsTypes = await getPropsTypes();
   itemTypes = await getItemTypes();
-  
-  await knex('items_props').del();
-  await knex('items').del();
   
   await processItem(tree);
 }
